@@ -6,7 +6,7 @@ The principle is the same as a static web site generator but for [Distributed Te
 
 ## Purpose
 
-Because text collections and chunks can be served via a standard protocol (DTS) but without the need for a dynamic service, this approach increases the sustainability of the texts (i.e. remove applicative dependency) and reduces the technical barrier and cost to publish them (static web services are easier to set up and migrate, and cheaper to run). There are other advantages typically found with static output such as lowered security risks, faster delivery and more stable operations.
+Because text collections and chunks can be served via a standard protocol (DTS) but without the need for a dynamic service, this approach increases the sustainability of the texts (i.e. remove applicative dependency) and reduces the technical barrier and cost to publish them (static web services are easier to set up and migrate, and cheaper to run). There are other advantages typically associated with static output such as lowered security risks, faster delivery and more stable operations.
 
 ## Drawbacks
 
