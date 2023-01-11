@@ -1,0 +1,32 @@
+{
+  "name": "kdl-dts-static",
+  "version": "0.1.0",
+  "description": "Static Distributed Text Service (DTS) API Generator.",
+  "/main": "index.js",
+  "scripts": {
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "static": "node ./bin/static.js"
+  },
+  "bin": {
+    "kdl-dts-static": "./bin/static.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingsdigitallab/kdl-dts-static.git"
+  },
+  "author": {
+    "name": "Geoffroy Noel",
+    "url": "https://github.com/geoffroy-noel-ddh"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kingsdigitallab/kdl-dts-static/issues"
+  },
+  "homepage": "https://github.com/kingsdigitallab/kdl-dts-static#readme",
+  "dependencies": {
+    "kdl-dts-client": "github:kingsdigitallab/kdl-dts-client",
+    "node-fetch": "^2.6.7",
+    "slugify": "^1.6.5",
+    "sync-fetch": "^0.4.2"
+  }
+}

@@ -17,11 +17,25 @@ The main disadvantages of this approach are:
 3. the degraded compliance with DTS standard (which requires adaptations to the DTS clients);
 4. the loss of support for certain DTS features;
 
-# Usage
+## Usage
 
-TODO
+It is assumed that you already have a working DTS API server (e.g. Nautilus, TEIPublisher, KDL DTS Server) running over your TEI corpus.
 
-# Deviations from DTS standard
+`npm i git@github.com:kingsdigitallab/kdl-dts-static.git`
 
-TODO
+`npx kdl-dts-static --source S --local L --target T`
 
+This will download all documents and collections from a running DTS API server which entry point URL is S and save the files under a local path L. T is the entry point URL of the resulting Static DTS API.
+
+## Deviations from DTS standard
+
+Existing DTS API client (e.g. a Text Viewer) can be easily adapted to interact with Static DTS datasets.
+
+The main difference with DTS is that requests pass parameters (e.g. id, ref) entirely via the webpath rather than the query string. Apart from that the content structure, the concepts and the responses are compliant with the DTS spec (draft 1, 2022).
+
+Mapping from DTS requests to Static DTS:
+
+- entry point: X => X.json
+- collections: X/documents/?id=ID => X/collections/ID.json
+- navigation: X/navigation/?id=ID&ref=REF => X/navigation/ID/REF.json
+- documents: X/documents/?id=ID&ref=REF&format=F => X/documents/ID/REF.F
