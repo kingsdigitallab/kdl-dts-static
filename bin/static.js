@@ -13,7 +13,22 @@ const fs = require("fs");
 
 class Generator {
   constructor() {
-    this.settings = require("../settings");
+    this.loadSettings()
+  }
+  loadSettings() {
+    let ret = require("../settings")
+    // read service settings from settings.js .
+    // they can be overridden by a json file passed as the last argument
+    let path = process.argv[process.argv.length - 1]
+    if (path.endsWith(".json")) {
+      let content = fs.readFileSync(path)
+      ret = {
+        ...ret,
+        ...JSON.parse(content)
+      }
+    }
+    this.settings = ret
+    return ret
   }
   async generate() {
     this.validateSettings();

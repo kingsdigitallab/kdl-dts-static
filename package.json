@@ -1,11 +1,12 @@
 {
   "name": "kdl-dts-static",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Static Distributed Text Service (DTS) API Generator.",
   "/main": "index.js",
   "scripts": {
     "test": "echo \"Warning: no test specified\" && exit 0",
-    "static": "node ./bin/static.js"
+    "static": "node ./bin/static.js",
+    "serve": "http-server -p 5500 --cors"
   },
   "bin": {
     "kdl-dts-static": "./bin/static.js"
@@ -28,5 +29,8 @@
     "node-fetch": "^2.6.7",
     "slugify": "^1.6.5",
     "sync-fetch": "^0.4.2"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
   }
 }

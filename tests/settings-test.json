@@ -1,0 +1,4 @@
+{
+  "local": "tests/dts.json",
+  "target": "http://localhost:5500/tests/dts.json"
+}
