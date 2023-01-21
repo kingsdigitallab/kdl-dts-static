@@ -23,9 +23,15 @@ It is assumed that you already have a working DTS API server (e.g. Nautilus, TEI
 
 `npm i git@github.com:kingsdigitallab/kdl-dts-static.git`
 
-`npx kdl-dts-static --source S --local L --target T`
+`npx kdl-dts-static SETTINGS.json`
 
-This will download all documents and collections from a running DTS API server which entry point URL is S and save the files under a local path L. T is the entry point URL of the resulting Static DTS API.
+This will request all passages of all documents from a DTS API server and save the responses to disk.
+
+SETTINGS.json is the path to a settings file with the following parameters:
+* source: the source of the DTS entry point
+* local: the base path where the responses should be saved
+* target: the URL at which the static DTS responses will eventually be served
+* format: the list of output formats to resquest
 
 ## Deviations from DTS standard
 
