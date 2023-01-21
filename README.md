@@ -27,7 +27,7 @@ It is assumed that you already have a working DTS API server (e.g. Nautilus, TEI
 npm i git@github.com:kingsdigitallab/kdl-dts-static.git
 ```
 
-### 2. create a sdts-settings.json file in the current directory (see below)
+### 2. create a sdts-settings.json file in the current directory
 
 The json contains the following keys:
 
