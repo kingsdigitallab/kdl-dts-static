@@ -21,17 +21,30 @@ The main disadvantages of this approach are:
 
 It is assumed that you already have a working DTS API server (e.g. Nautilus, TEIPublisher, KDL DTS Server) running over your TEI corpus.
 
-`npm i git@github.com:kingsdigitallab/kdl-dts-static.git`
+### 1. Install kdl-dts-static
 
-`npx kdl-dts-static SETTINGS.json`
+```bash
+npm i git@github.com:kingsdigitallab/kdl-dts-static.git
+```
+
+### 2. create a sdts-settings.json file in the current directory (see below)
+
+The json contains the following keys:
+
+* `source`: the source of the DTS entry point
+* `local`: the base path where the responses should be saved
+* `target`: the URL at which the static DTS responses will eventually be served
+* `format`: the list of output formats to request (default: ["html"])
+
+### 3. generate the static version of the DTS service:
+
+```bash
+npx kdl-dts-static sdts-settings.json
+```
 
 This will request all passages of all documents from a DTS API server and save the responses to disk.
 
-SETTINGS.json is the path to a settings file with the following parameters:
-* source: the source of the DTS entry point
-* local: the base path where the responses should be saved
-* target: the URL at which the static DTS responses will eventually be served
-* format: the list of output formats to resquest
+### 4. serve the generated files with any static web server
 
 ## Deviations from DTS standard
 
