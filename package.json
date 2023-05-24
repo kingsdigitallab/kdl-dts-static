@@ -1,6 +1,6 @@
 {
   "name": "kdl-dts-static",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Static Distributed Text Service (DTS) API Generator.",
   "/main": "index.js",
   "scripts": {

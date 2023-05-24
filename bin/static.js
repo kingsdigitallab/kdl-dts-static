@@ -27,7 +27,14 @@ class Generator {
         ...JSON.parse(content)
       }
     }
+
+    if (!ret.local) {
+      // if not provided, the local destination is the filename of the target
+      ret.local = ret.target.replace(/^.*\//, '')
+    }
+
     this.settings = ret
+
     return ret
   }
   async generate() {
@@ -37,7 +44,7 @@ class Generator {
 
     // get services URIs from DTS entrypoint
     this.responses = {
-      entryPoint: await this.fetchDTS(),
+      entryPoint: await this.fetchAndWriteDTS(),
     };
 
     // TODO: rewrite webpaths of the services
@@ -45,7 +52,7 @@ class Generator {
 
     // get root collection
     // TODO: paginate
-    let res = await this.fetchDTS("collections");
+    let res = await this.fetchAndWriteDTS("collections");
 
     // TODO: get subcollections (recursive fct)
 
@@ -54,12 +61,12 @@ class Generator {
       if (colMember["@type"] == "Resource") {
         // get Navigation
         // TODO: paginate
-        let nav = await this.fetchDTS("navigation", colMember["@id"]);
+        let nav = await this.fetchAndWriteDTS("navigation", colMember["@id"]);
 
         // get Passages
         for (let ref of nav.member) {
           for (let format of this.settings.formats) {
-            await this.fetchDTS(
+            await this.fetchAndWriteDTS(
               "documents",
               colMember["@id"],
               ref["dts:ref"],
@@ -80,7 +87,7 @@ class Generator {
       fs.rmSync(apath, { recursive: true });
     }
   }
-  async fetchDTS(service, id, ref, format) {
+  async fetchAndWriteDTS(service, id, ref, format) {
     let ret = await dtsutils.fetchDTS(
       {
         selections: { source: this.settings.source },
@@ -96,9 +103,15 @@ class Generator {
 
     let res = this.getTranformedResponse(service, ret);
 
-    this.saveResponse(res, service, id, ref, format);
+    this.writeResponse(res, service, id, ref, format);
 
     return ret;
+  }
+  getParentFolderName() {
+    return new URL(this.settings.target)
+      .pathname
+      .replace(/^.*\//, "")
+      .replace(/\.json$/, "")
   }
   getTranformedResponse(service, res) {
     if (service == "documents") return res;
@@ -109,25 +122,24 @@ class Generator {
         /\.json$/,
         ""
       );
+      let parentFolder = this.getParentFolderName()
       ret["@id"] = `${targetRoot}.json`;
-      ret.collections = `${targetRoot}/collections`;
-      ret.navigation = `${targetRoot}/navigation`;
-      ret.documents = `${targetRoot}/documents`;
+      ret.collections = `${parentFolder}/collections`;
+      ret.navigation = `${parentFolder}/navigation`;
+      ret.documents = `${parentFolder}/documents`;
     }
     return ret;
   }
-  logjson(data) {
-    console.log(JSON.stringify(data, null, 2));
-  }
-  saveResponse(data, service, id, ref, format) {
+  writeResponse(data, service, id, ref, format) {
+    let parentFolder = this.getParentFolderName()
     let filePath = dtsutils.getDTSUrl(
       {
         selections: { source: this.settings.local },
         responses: {
           entryPoint: {
-            collections: "/collections",
-            navigation: "/navigation",
-            documents: "/documents",
+            collections: `${parentFolder}/collections`,
+            navigation: `${parentFolder}/navigation`,
+            documents: `${parentFolder}/documents`,
           },
         },
       },
@@ -167,6 +179,9 @@ class Generator {
       }
       exit(1);
     }
+  }
+  logjson(data) {
+    console.log(JSON.stringify(data, null, 2));
   }
   error(message) {
     console.error(`ERROR: ${message}`);
